@@ -103,6 +103,20 @@ class WRAPPER {
         }
     }
 
+    async getWeapons(server) {
+        if (server && getServers.indexOf(server) === -1)
+            return Promise.reject(`The server is wrong, available servers: ${getServers.join(', ')}`)
+
+        try {
+            const api = this.getApiUrl(server);
+            const {data} = await axios.get(`${api}weapon/catalog`)
+            return Promise.resolve({server, data})
+        } catch (err) {
+            const {data} = err.response
+            return Promise.reject(data)
+        }
+    }
+
 }
 
 module.exports = WRAPPER
