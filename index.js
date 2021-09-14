@@ -1,16 +1,9 @@
 const axios = require('axios')
 const {getPlayer} = require('./player.js')
 
+const getServers = ['ru', 'int'];
+
 class WRAPPER {
-    constructor(name, server) {
-        this.name = name
-        this.server = server
-    }
-
-    getServers() {
-        return ['ru', 'int'];
-    }
-
     getApiUrl(server) {
         switch (server) {
             case 'ru':
@@ -20,21 +13,25 @@ class WRAPPER {
         }
     }
 
-    async getPlayer() {
+    async getPlayer(name, server) {
+        if (!name)
+            return Promise.reject("No nickname specified")
+
+        if (server && getServers.indexOf(server) !== -1)
+            return Promise.reject(`The server is wrong, available servers: ${getServers.join(', ')}`)
+
         let servers = []
-        if (this.server) {
-            servers.push(this.server)
+        if (server) {
+            servers.push(server)
         } else {
-            servers = this.getServers()
+            servers = getServers
         }
 
         for (let server of servers) {
             const api = this.getApiUrl(server);
-//
-            const url = `${api}user/stat?name=${this.name}`
 
             try {
-                const {data} = await axios.get(url)
+                const {data} = await axios.get(`${api}user/stat?name=${name}`)
                 return Promise.resolve(getPlayer(data, server))
             } catch (err) {
                 const {data} = err.response
