@@ -2,6 +2,7 @@ const axios = require('axios')
 const {getPlayer} = require('./player.js')
 
 const getServers = ['ru', 'int'];
+const leagues = [1, 2, 3, 4, 5, 6];
 
 class WRAPPER {
     getApiUrl(server) {
@@ -78,6 +79,27 @@ class WRAPPER {
                     return Promise.reject('not_found');
                 }
             }
+        }
+    }
+
+    async getLeague(server, league) {
+        if (!league)
+            return Promise.reject("No league specified")
+        if (leagues.indexOf(league) === -1)
+            return Promise.reject("The league is wrong, available servers: " + leagues.join(', '))
+        if (!server)
+            return Promise.reject("No server specified")
+        if (getServers.indexOf(server) === -1)
+            return Promise.reject(`The server is wrong, available servers: ${getServers.join(', ')}`)
+
+        const api = this.getApiUrl(server)
+
+        try {
+            const {data} = await axios.get(`${api}rating/monthly?league=${league}`)
+            return Promise.resolve({server, data})
+        } catch (err) {
+            const {data} = err.response
+            return Promise.reject(data)
         }
     }
 
