@@ -5,7 +5,7 @@ const getServers = ['ru', 'int'];
 
 class WRAPPER {
     getApiUrl(server) {
-        switch (server) {
+        switch (server.toLowerCase()) {
             case 'ru':
                 return 'http://api.warface.ru/'
             case 'int':
