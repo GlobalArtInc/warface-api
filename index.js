@@ -45,7 +45,6 @@ class WRAPPER {
                 } else if (servers[servers.length - 1] === server && data.message === 'Пользователь не найден') {
                     return Promise.reject('not_found');
                 }
-
             }
         }
     }
