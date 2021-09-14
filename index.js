@@ -17,7 +17,7 @@ class WRAPPER {
         if (!name)
             return Promise.reject("No nickname specified")
 
-        if (server && getServers.indexOf(server) !== -1)
+        if (server && getServers.indexOf(server) === -1)
             return Promise.reject(`The server is wrong, available servers: ${getServers.join(', ')}`)
 
         let servers = []
@@ -43,6 +43,38 @@ class WRAPPER {
                 } else if (data.message === 'Игрок скрыл свою статистику') {
                     return Promise.reject('hidden');
                 } else if (servers[servers.length - 1] === server && data.message === 'Пользователь не найден') {
+                    return Promise.reject('not_found');
+                }
+            }
+        }
+    }
+
+    async getClan(name, server) {
+        if (!name)
+            return Promise.reject("No clan name specified")
+
+        if (server && getServers.indexOf(server) === -1)
+            return Promise.reject(`The server is wrong, available servers: ${getServers.join(', ')}`)
+
+        let servers = []
+        if (server) {
+            servers.push(server)
+        } else {
+            servers = getServers
+        }
+
+        for (let server of servers) {
+            const api = this.getApiUrl(server);
+
+            try {
+                const {data} = await axios.get(`${api}clan/members?clan=${name}`)
+                return Promise.resolve({server, clan: data})
+            } catch (err) {
+                const {data} = err.response
+
+                if (data.message === 'Ошибка: invalid response status') {
+                    return Promise.reject('maintenance');
+                } else if (servers[servers.length - 1] === server && data.message === 'Клан не найден') {
                     return Promise.reject('not_found');
                 }
             }
