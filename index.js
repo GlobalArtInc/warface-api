@@ -33,7 +33,8 @@ class WRAPPER {
 
             try {
                 const {data} = await axios.get(`${api}user/stat?name=${name}`)
-                return Promise.resolve(getPlayer(data, server))
+                const achievements = await this.getAchievements(name, server)
+                return Promise.resolve(getPlayer(data, achievements, server))
             } catch (err) {
                 const {data} = err.response
 
@@ -48,6 +49,28 @@ class WRAPPER {
                 }
             }
         }
+    }
+
+    async getAchievements(name, server) {
+        const api = this.getApiUrl(server);
+
+        try {
+            const {data} = await axios.get(`${api}user/achievements?name=${name}`)
+            return Promise.resolve(data)
+        } catch (err) {
+            const {data} = err.response
+
+            if (data.message === 'Ошибка: invalid response status') {
+                return Promise.reject('maintenance');
+            } else if (data.message === 'Персонаж неактивен') {
+                return Promise.reject('inactive');
+            } else if (data.message === 'Игрок скрыл свою статистику') {
+                return Promise.reject('hidden');
+            } else if (data.message === 'Пользователь не найден') {
+                return Promise.reject('not_found');
+            }
+        }
+
     }
 
     async getClan(name, server) {

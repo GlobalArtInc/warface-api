@@ -2,7 +2,7 @@ function getMatch(el, regexp) {
     return el.match(regexp)[0].trim()
 }
 
-module.exports.getPlayer = (data, server) => {
+module.exports.getPlayer = (data, achievements, server) => {
     let player = data;
     const full_player = parseFullResponse(player['full_response']);
     delete player['full_response'];
@@ -10,7 +10,8 @@ module.exports.getPlayer = (data, server) => {
     return {
         server,
         player,
-        full_player
+        full_player,
+        achievements
     };
 }
 
