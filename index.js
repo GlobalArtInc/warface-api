@@ -60,7 +60,6 @@ class WRAPPER {
             api = this.getApiUrl(player.server)
         }
 
-
         try {
             const {data} = await axios.get(`${api}user/achievements?name=${name}`)
             return Promise.resolve(data)
