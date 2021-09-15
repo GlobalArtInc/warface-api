@@ -52,7 +52,14 @@ class WRAPPER {
     }
 
     async getAchievements(name, server) {
-        const api = this.getApiUrl(server);
+        let api;
+        if (server) {
+            api = this.getApiUrl(server);
+        } else {
+            const player = await this.getPlayer(name)
+            api = this.getApiUrl(player.server)
+        }
+
 
         try {
             const {data} = await axios.get(`${api}user/achievements?name=${name}`)
