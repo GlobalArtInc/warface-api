@@ -51,6 +51,24 @@ class WRAPPER {
         }
     }
 
+    async getTop100(server) {
+        if (!server)
+            return Promise.reject("No server specified")
+        if (getServers.indexOf(server) === -1)
+            return Promise.reject(`The server is wrong, available servers: ${getServers.join(', ')}`)
+
+        const api = this.getApiUrl(server)
+
+        try {
+            const {data} = await axios.get(`${api}rating/top100`)
+            return Promise.resolve(data)
+        } catch (err) {
+            const {data} = err.response
+            return Promise.reject(data)
+        }
+
+    }
+
     async getAchievements(name, server) {
         let api;
         if (server) {
