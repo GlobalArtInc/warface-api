@@ -54,6 +54,9 @@ class WRAPPER {
     async getAchievements(name, server) {
         let api;
         if (server) {
+            if (getServers.indexOf(server) === -1)
+                return Promise.reject(`The server is wrong, available servers: ${getServers.join(', ')}`)
+
             api = this.getApiUrl(server);
         } else {
             const player = await this.getPlayer(name)
