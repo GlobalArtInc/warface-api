@@ -4,6 +4,10 @@ const {getPlayer} = require('./player.js')
 const getServers = ['ru', 'int'];
 const leagues = [1, 2, 3, 4, 5, 6];
 
+/**
+ * @author GlobalArt, ltd
+ * @module
+ */
 class WRAPPER {
     /*
      * @function
@@ -132,7 +136,6 @@ class WRAPPER {
                 const {data} = await axios.get(encodeURI(`${api}clan/members?clan=${name}`))
                 return Promise.resolve({server, clan: data})
             } catch (err) {
-                console.log(err)
                 const {data} = err.response
 
                 if (data.message === 'Ошибка: invalid response status') {

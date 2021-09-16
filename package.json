@@ -1,6 +1,6 @@
 {
   "name": "@globalart/warface-api",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Warface API library for nodeJs",
   "main": "index.js",
   "private": false,
