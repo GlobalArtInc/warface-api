@@ -5,6 +5,11 @@ const getServers = ['ru', 'int'];
 const leagues = [1, 2, 3, 4, 5, 6];
 
 class WRAPPER {
+    /*
+     * @function
+     * @param {string} server
+     * @return {string} Return the api url
+     */
     getApiUrl(server) {
         switch (server.toLowerCase()) {
             case 'ru':
@@ -14,6 +19,12 @@ class WRAPPER {
         }
     }
 
+    /*
+     * @function
+     * @param {string} name
+     * @param {string} server
+     * @return {object} Returns the object of player
+     */
     async getPlayer(name, server) {
         if (!name)
             return Promise.reject("No nickname specified")
@@ -32,7 +43,7 @@ class WRAPPER {
             const api = this.getApiUrl(server);
 
             try {
-                const {data} = await axios.get(`${api}user/stat?name=${name}`)
+                const {data} = await axios.get(encodeURI(`${api}user/stat?name=${name}`))
                 const achievements = await this.getAchievements(name, server)
                 return Promise.resolve(getPlayer(data, achievements, server))
             } catch (err) {
@@ -82,7 +93,7 @@ class WRAPPER {
         }
 
         try {
-            const {data} = await axios.get(`${api}user/achievements?name=${name}`)
+            const {data} = await axios.get(encodeURI(`${api}user/achievements?name=${name}`))
             return Promise.resolve(data)
         } catch (err) {
             const {data} = err.response
@@ -118,9 +129,10 @@ class WRAPPER {
             const api = this.getApiUrl(server);
 
             try {
-                const {data} = await axios.get(`${api}clan/members?clan=${name}`)
+                const {data} = await axios.get(encodeURI(`${api}clan/members?clan=${name}`))
                 return Promise.resolve({server, clan: data})
             } catch (err) {
+                console.log(err)
                 const {data} = err.response
 
                 if (data.message === 'Ошибка: invalid response status') {
