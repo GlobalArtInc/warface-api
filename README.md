@@ -17,6 +17,7 @@ const WF = require('@globalart/warface-api')
 new WF().getPlayer("МедикХххх").then((player) => {
     console.log(player)
 }).catch((err) => {
+    // Ошибки поиска (игрок не найден, неативен и т.д.)
     console.log(err)
 })
 ```
@@ -25,6 +26,7 @@ new WF().getPlayer("МедикХххх").then((player) => {
 new WF().getClan("атомные_медики").then((clan) => {
     console.log(clan)
 }).catch((err) => {
+    // Ошибки поиска (клан не найден и т.д.)
     console.log(err)
 })
 ```

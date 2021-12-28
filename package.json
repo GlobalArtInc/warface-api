@@ -1,6 +1,6 @@
 {
   "name": "@globalart/warface-api",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Warface API library for nodeJs",
   "main": "index.js",
   "private": false,
@@ -12,17 +12,17 @@
     "wf",
     "wf-api"
   ],
-  "author": "GlobalArt, ltd",
+  "author": "GlobalArt, Inc",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.4"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GlobalArtLimited/warface-api-wrapper.git"
+    "url": "git+https://github.com/GlobalArtInc/warface-api-wrapper.git"
   },
   "bugs": {
-    "url": "https://github.com/GlobalArtLimited/warface-api-wrapper/issues"
+    "url": "https://github.com/GlobalArtInc/warface-api-wrapper/issues"
   },
-  "homepage": "https://github.com/GlobalArtLimited/warface-api-wrapper#readme"
+  "homepage": "https://github.com/GlobalArtInc/warface-api-wrapper#readme"
 }
