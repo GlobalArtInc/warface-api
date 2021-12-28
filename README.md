@@ -1,6 +1,7 @@
 # Warface API
 Небольшой модуль-враппер для работы с Warface API. 
 
+[![Publish Package to npmjs](https://github.com/GlobalArtInc/warface-api-wrapper/actions/workflows/publish.yml/badge.svg)](https://github.com/GlobalArtInc/warface-api-wrapper/actions/workflows/publish.yml)
 ## Установка
 ```sh
 $ npm install @globalart/warface-api
