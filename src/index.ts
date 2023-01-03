@@ -1,6 +1,9 @@
 import axios from "axios";
 import { Endpoint, Server } from "./enum/common.enum";
+import { Clan } from "./interfaces/clan.interface";
 import { Achievement } from "./interfaces/common.interface";
+import { Player } from "./interfaces/player.interface";
+import { Top } from "./interfaces/top.interface";
 import formatService from "./services/format.service";
 
 export class WFApi {
@@ -43,7 +46,7 @@ export class WFApi {
     });
   }
 
-  async getTop100(server: Server) {
+  async getTop100(server: Server): Promise<Top> {
     return new Promise(async (resolve, reject) => {
       if(!server) {
         return reject('no_server_specified');
@@ -60,7 +63,7 @@ export class WFApi {
     });
   }
 
-  async getPlayer(name: string, server: Server | null = null) {
+  async getPlayer(name: string, server: Server | null = null): Promise<Player> {
     return new Promise(async (resolve, reject) => {
       if(!name) {
         reject(new Error('nickname_not_specified'));
@@ -102,7 +105,7 @@ export class WFApi {
     });
   }
 
-  async getClan(name: string, server: Server | null = null) {
+  async getClan(name: string, server: Server | null = null): Promise<Clan> {
     return new Promise(async (resolve, reject) => {
       if(!name) {
         reject('name_is_not_specified');

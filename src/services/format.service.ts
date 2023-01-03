@@ -1,11 +1,13 @@
 import { Server } from "../enum/common.enum";
+import { Achievement } from "../interfaces/common.interface";
+import { Player } from "../interfaces/player.interface";
 
 export class formatService {
   getMatch(el: any, regexp: any) {
     return el.match(regexp)[0].trim();
   }
 
-  format(playerData: any, achievements: any, server: Server) {
+  format(playerData: Partial<Player>, achievements: Achievement[], server: Server) {
     let player = playerData;
     const full_player = parseFullResponse(player['full_response']);
     delete player['full_response'];
@@ -14,7 +16,7 @@ export class formatService {
         server,
         player,
         full_player,
-        achievements
+        achievements,
     };
   }
 
