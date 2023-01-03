@@ -9,7 +9,10 @@ $ npm install @globalart/warface-api
 
 ## Инициализация враппера
 ```js
-const WF = require('@globalart/warface-api')
+const { WFApi } = require('@globalart/warface-api');
+```
+```es6
+import { WFApi } from '@globalart/warface-api';
 ```
 
 ## Примеры кода
