@@ -85,7 +85,7 @@ export class playerService {
     return el.match(regexp)[0].trim();
   }
 
-  format(player: Partial<Player>, achievements: Achievement[], server: Server) {
+  format(player: Partial<Player>, achievements: Achievement[], server: Server): Record<string, unknown> {
     const full_player = this.parseFullResponse(player['full_response']);
     delete player['full_response'];
   
