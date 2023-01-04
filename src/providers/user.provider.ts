@@ -1,13 +1,12 @@
+import { WFClient } from "../core";
+import { Endpoint, Server } from "../core/common";
 import axios from "axios";
-import { WFApi } from "..";
-import { Endpoint, Server } from "../enum/common.enum";
-import { Player, Achievement } from "../interfaces/player.interface";
 
-export class playerService {
-  async getPlayer(name: string, server: Server | null): Promise<Player> {
+export class UserProvider {
+  async stat(nickname: string, server: Server | null = null) {
     return new Promise(async (resolve, reject) => {
-      if(!name) {
-        reject(new Error('nickname_not_specified'));
+      if(!nickname) {
+        reject('nickname_not_specified');
       }
       let servers: Server[] = [];
       if(server) {
@@ -16,18 +15,22 @@ export class playerService {
         servers = [Server.Ru, Server.Int];
       }
 
-      for(let server of servers) {
-        const endpointUrl = WFApi.getApiUrl(server);
-        
+      for(const server of servers) {
+        const endpoint = WFClient.getEndpoint(server);
+
         try {
-          const [ playerRes, achievements ] = await Promise.all([
-            axios.get(encodeURI(`${endpointUrl}user/stat?name=${name}`)),
-            this.getAchievements(name, server),
+          const [playerRes, achievements] = await Promise.all([
+            axios.get(`${encodeURI(`${endpoint}user/stat?name=${nickname}`)}`),
+            this.achievements(nickname, server),
           ]);
           const player = playerRes.data;
 
-          if(player.nickname) {
-            return resolve(this.format(player, achievements, server));
+          if(player.user_id) {
+            return resolve(this.formatPlayerStructure({
+              player,
+              server,
+              achievements,
+            }));
           }
         } catch (err) {
           const response = err.response.data;
@@ -35,34 +38,34 @@ export class playerService {
           if (response.message === 'Ошибка: invalid response status') {
             return reject('maintenance');
           } else if (response.message === 'Персонаж неактивен') {
-              return reject('inactive');
+            return reject('inactive');
           } else if (response.message === 'Игрок скрыл свою статистику') {
-              return reject('hidden');
-          } else if (response.message === 'Пользователь не найден') {
-              return reject('not_found');
+            return reject('hidden');
+          } else if (server === servers[servers.length - 1] && response.message === 'Пользователь не найден') {
+            return reject('not_found');
           }
         }
       }
     });
-  } 
+  }
 
-  async getAchievements(name: string, server: Server): Promise<Achievement[]> {
+  async achievements(nickname: string, server: Server) {
     return new Promise(async (resolve, reject) => {
       let endpoint: Endpoint;
-      if(!name) {
+      if(!nickname) {
         return reject(new Error('nickname_not_specified'));
       }
       let servers: Server[] = [];
       if(server) {
         servers.push(server);
-        endpoint = WFApi.getApiUrl(server);
+        endpoint = WFClient.getEndpoint(server);
       } else {
         servers = [Server.Ru, Server.Int];
-        endpoint = WFApi.getApiUrl(server);
+        endpoint = WFClient.getEndpoint(server);
       }
 
       try {
-        const achievements = await axios.get(encodeURI(`${endpoint}user/achievements?name=${name}`));
+        const achievements = await axios.get(encodeURI(`${endpoint}user/achievements?name=${nickname}`));
 
         return resolve(achievements.data);
       } catch (err) {
@@ -81,11 +84,23 @@ export class playerService {
     });
   }
 
-  getMatch(el: any, regexp: any) {
+  private getMatch(el: any, regexp: any) {
     return el.match(regexp)[0].trim();
   }
 
-  format(player: Partial<Player>, achievements: Achievement[], server: Server): Record<string, unknown> {
+  private parseFullResponse(fullResponse: string) {
+    return fullResponse.split(/<Sum>/).reduce((acc, el) => {
+      if (!el) return acc
+  
+      const key = this.getMatch(el, /.*(?=\=)/)
+      acc[key] = +this.getMatch(el, /(?<=\=).*/)
+  
+      return acc
+    }, {});
+  }
+
+  private formatPlayerStructure(playerData: any) {
+    const { server, player, achievements } = playerData;
     const full_player = this.parseFullResponse(player['full_response']);
     delete player['full_response'];
   
@@ -97,16 +112,4 @@ export class playerService {
     };
   }
 
-  parseFullResponse(full_response: string) {
-    return full_response.split(/<Sum>/).reduce((acc, el) => {
-      if (!el) return acc
-  
-      const key = this.getMatch(el, /.*(?=\=)/)
-      acc[key] = +this.getMatch(el, /(?<=\=).*/)
-  
-      return acc
-    }, {});
-  }
 }
-
-export default new playerService();

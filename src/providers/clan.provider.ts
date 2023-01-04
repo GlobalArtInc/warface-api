@@ -1,10 +1,9 @@
 import axios from "axios";
-import { WFApi } from "..";
-import { Server } from "../enum/common.enum";
-import { Clan } from "../interfaces/clan.interface";
+import { WFClient } from "../core";
+import { Server } from "../core/common";
 
-export class ClanService {
-  async getClan(name: string, server: Server | null): Promise<Clan> {
+export class ClanProvider {
+  async members(name: string, server: Server | null = null) {
     return new Promise(async (resolve, reject) => {
       if(!name) {
         reject('name_is_not_specified');
@@ -15,9 +14,9 @@ export class ClanService {
       } else {
           servers = [Server.Ru, Server.Int];
       }
-      
+
       for(const server of servers) {
-        const endpoint = WFApi.getApiUrl(server);
+        const endpoint = WFClient.getEndpoint(server);
 
         try {
           const response = await axios.get(encodeURI(`${endpoint}clan/members?clan=${name}`))
@@ -27,14 +26,13 @@ export class ClanService {
           const response = err.response.data
 
           if (response.message === 'Ошибка: invalid response status') {
-              return reject('maintenance');
+            return reject('maintenance');
           } else if (servers[servers.length - 1] === server && response.message === 'Клан не найден') {
-              return reject('not_found');
+            return reject('not_found');
           }
         }
       }
+
     });
   }
 }
-
-export default new ClanService();

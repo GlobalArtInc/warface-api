@@ -8,17 +8,20 @@ $ npm install @globalart/warface-api
 ```
 
 ## Инициализация враппера
+Common JS
 ```js
-const { WFApi } = require('@globalart/warface-api');
+const { WFClient } = require('@globalart/warface-api');
 ```
-```es6
-import { WFApi } from '@globalart/warface-api';
+
+EcmaScript 6
+```ts
+import { WFClient } from '@globalart/warface-api';
 ```
 
 ## Примеры кода
 **Получение игрока**
-```js
-new WF().getPlayer("МедикХххх").then((player) => {
+```ts
+new WFClient().player.stat("МедикХххх").then((player) => {
     console.log(player)
 }).catch((err) => {
     // Ошибки поиска (игрок не найден, неативен и т.д.)
@@ -27,7 +30,7 @@ new WF().getPlayer("МедикХххх").then((player) => {
 ```
 **Получение клана**
 ```js
-new WF().getClan("атомные_медики").then((clan) => {
+new WFClient().clan.members("атомные_медики").then((clan) => {
     console.log(clan)
 }).catch((err) => {
     // Ошибки поиска (клан не найден и т.д.)

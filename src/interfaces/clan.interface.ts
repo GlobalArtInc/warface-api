@@ -1,4 +1,4 @@
-import { ClanRole } from "../enum/clan.enum";
+import { ClanRole } from "../core";
 
 export interface ClanMember {
   nickname: string;
