@@ -8,7 +8,7 @@ export class GameProvider {
     
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.get(`${endpoint}game/missions`);
+        const response = await axios.get(`${endpoint}/game/missions`);
 
         return resolve(response.data);
       } catch (err) {

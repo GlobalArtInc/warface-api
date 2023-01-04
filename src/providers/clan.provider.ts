@@ -19,7 +19,7 @@ export class ClanProvider {
         const endpoint = WFClient.getEndpoint(server);
 
         try {
-          const response = await axios.get(encodeURI(`${endpoint}clan/members?clan=${name}`))
+          const response = await axios.get(encodeURI(`${endpoint}/clan/members?clan=${name}`))
 
           return resolve(response.data);
         } catch (err) {

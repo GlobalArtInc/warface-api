@@ -20,7 +20,7 @@ export class UserProvider {
 
         try {
           const [playerRes, achievements] = await Promise.all([
-            axios.get(`${encodeURI(`${endpoint}user/stat?name=${nickname}`)}`),
+            axios.get(`${encodeURI(`${endpoint}/user/stat?name=${nickname}`)}`),
             this.achievements(nickname, server),
           ]);
           const player = playerRes.data;
@@ -65,7 +65,7 @@ export class UserProvider {
       }
 
       try {
-        const achievements = await axios.get(encodeURI(`${endpoint}user/achievements?name=${nickname}`));
+        const achievements = await axios.get(encodeURI(`${endpoint}/user/achievements?name=${nickname}`));
 
         return resolve(achievements.data);
       } catch (err) {

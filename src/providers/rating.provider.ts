@@ -8,7 +8,7 @@ export class RatingProvider {
     
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.get(`${endpoint}rating/top100`);
+        const response = await axios.get(`${endpoint}/rating/top100`);
 
         return resolve(response.data);
       } catch(err) {

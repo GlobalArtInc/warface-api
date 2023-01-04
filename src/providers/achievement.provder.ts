@@ -8,7 +8,7 @@ export class AchievementProvider {
 
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.get(`${endpoint}achievement/catalog`);
+        const response = await axios.get(`${endpoint}/achievement/catalog`);
 
         return resolve(response.data);
       } catch (err) {
