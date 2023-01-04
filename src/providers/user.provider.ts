@@ -1,9 +1,10 @@
 import { WFClient } from "../core";
 import { Endpoint, Server } from "../core/common";
 import axios from "axios";
+import { Achievement, Player } from "../interfaces";
 
 export class UserProvider {
-  async stat(nickname: string, server: Server | null = null) {
+  async stat(nickname: string, server: Server | null = null): Promise<Player> {
     return new Promise(async (resolve, reject) => {
       if(!nickname) {
         reject('nickname_not_specified');
@@ -49,7 +50,7 @@ export class UserProvider {
     });
   }
 
-  async achievements(nickname: string, server: Server) {
+  async achievements(nickname: string, server: Server): Promise<Achievement[]> {
     return new Promise(async (resolve, reject) => {
       let endpoint: Endpoint;
       if(!nickname) {

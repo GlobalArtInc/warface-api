@@ -1,9 +1,9 @@
 import axios from "axios";
-import { WFClient } from "../core";
-import { Server } from "../core/common";
+import { WFClient, Server } from "../core";
+import { Clan } from "../interfaces";
 
 export class ClanProvider {
-  async members(name: string, server: Server | null = null) {
+  async members(name: string, server: Server | null = null): Promise<Clan> {
     return new Promise(async (resolve, reject) => {
       if(!name) {
         reject('name_is_not_specified');
@@ -32,7 +32,6 @@ export class ClanProvider {
           }
         }
       }
-
     });
   }
 }
