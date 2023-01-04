@@ -1,18 +1,32 @@
-import { AchievementProvider } from "../providers/achievement.provder";
-import { ClanProvider } from "../providers/clan.provider";
-import { GameProvider } from "../providers/game.provider";
-import { RatingProvider } from "../providers/rating.provider";
-import { UserProvider } from "../providers/user.provider";
-import { Endpoint, Server } from "./common";
+import {
+  AchievementProvider as WfaAchievementProvider,
+  ClanProvider as WfaClanProvider,
+  GameProvider as WfaGameProvider,
+  RatingProvider as WfaRatingProvider,
+  UserProvider as WfaUserProvider,
+} from '../providers/wf-api';
+import { 
+  WfsOnlineProvider,
+  WfsPlayerProvider,
+  WfsClanProvider,
+} from '../providers/wfs';
+import { Endpoint as WfaEndpoint } from "./wf-api";
+import { Server } from "./common";
 
 export class WFClient {
-  public clan = new ClanProvider();
-  public user = new UserProvider();
-  public game = new GameProvider();
-  public achievement = new AchievementProvider();
-  public rating = new RatingProvider();
+  public clan = new WfaClanProvider();
+  public user = new WfaUserProvider();
+  public game = new WfaGameProvider();
+  public achievement = new WfaAchievementProvider();
+  public rating = new WfaRatingProvider();
 
   static getEndpoint(server: Server) {
-    return Endpoint[server];
+    return WfaEndpoint[server];
   }
+}
+
+export class WFSClient {
+  public online = new WfsOnlineProvider();
+  public player = new WfsPlayerProvider();
+  public clan = new WfsClanProvider();
 }

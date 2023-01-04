@@ -1,17 +1,16 @@
 import axios from "axios";
-import { WFClient } from "../core";
-import { Server } from "../core/common";
+import { WFClient, Server } from "../../core";
 
-export class GameProvider {
-  async missions(server: Server = Server.Ru) {
+export class RatingProvider {
+  async top100(server: Server) {
     const endpoint = WFClient.getEndpoint(server);
     
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.get(`${endpoint}/game/missions`);
+        const response = await axios.get(`${endpoint}/rating/top100`);
 
         return resolve(response.data);
-      } catch (err) {
+      } catch(err) {
         return reject(err.response.data);
       }
     });

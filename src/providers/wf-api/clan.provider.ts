@@ -1,6 +1,6 @@
 import axios from "axios";
-import { WFClient, Server } from "../core";
-import { Clan } from "../interfaces";
+import { WFClient, Server } from "../../core";
+import { Clan } from "../../interfaces/wf-api";
 
 export class ClanProvider {
   async members(name: string, server: Server | null = null): Promise<Clan> {

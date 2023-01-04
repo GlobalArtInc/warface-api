@@ -1,4 +1,4 @@
-import { ClanRole } from "../core";
+import { ClanRole } from "core/wf-api";
 
 export interface ClanMember {
   nickname: string;

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { WFClient } from "../core";
-import { Server } from "../core/common";
+import { WFClient } from "../../core";
+import { Server } from "../../core";
 
 export class AchievementProvider {
   async catalog(server = Server.Ru) {
