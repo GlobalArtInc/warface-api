@@ -40,8 +40,5 @@ ___
 ```js
 new WFSClient().online.stats().then((res) => {
     console.log(res)
-}).catch((err) => {
-    // Ошибки поиска (клан не найден и т.д.)
-    console.log(err)
-})
+});
 ```
