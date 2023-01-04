@@ -16,38 +16,7 @@ export class WFApi {
   }
 
   async getAchievements(name: string, server: Server): Promise<Achievement[]> {
-    return new Promise(async (resolve, reject) => {
-      let endpoint: Endpoint;
-      if(!name) {
-        return reject(new Error('nickname_not_specified'));
-      }
-      let servers: Server[] = [];
-      if(server) {
-        servers.push(server);
-        endpoint = WFApi.getApiUrl(server);
-      } else {
-        servers = [Server.Ru, Server.Int];
-        endpoint = WFApi.getApiUrl(server);
-      }
-
-      try {
-        const achievements = await axios.get(encodeURI(`${endpoint}user/achievements?name=${name}`));
-
-        return resolve(achievements.data);
-      } catch (err) {
-        const {data} = err.response
-
-        if (data.message === 'Ошибка: invalid response status') {
-          return reject('maintenance');
-        } else if (data.message === 'Персонаж неактивен') {
-          return reject('inactive');
-        } else if (data.message === 'Игрок скрыл свою статистику') {
-          return reject('hidden');
-        } else if (data.message === 'Пользователь не найден') {
-          return reject('not_found');
-        }
-      }
-    });
+    return playerService.getAchievements(name, server);
   }
 
   async getTop100(server: Server): Promise<Top> {

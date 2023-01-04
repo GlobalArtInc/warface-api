@@ -48,7 +48,7 @@ export class playerService {
     });
   } 
 
-  async getAchievements(name: string, server: Server): Promise<Achievement> {
+  async getAchievements(name: string, server: Server): Promise<Achievement[]> {
     return new Promise(async (resolve, reject) => {
       let endpoint: Endpoint;
       if(!name) {
@@ -87,7 +87,7 @@ export class playerService {
     return el.match(regexp)[0].trim();
   }
 
-  format(playerData: Partial<Player>, achievements: any, server: Server) {
+  format(playerData: Partial<Player>, achievements: Achievement[], server: Server) {
     let player = playerData;
     const full_player = this.parseFullResponse(player['full_response']);
     delete player['full_response'];
