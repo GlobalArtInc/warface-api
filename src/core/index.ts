@@ -1,2 +1,2 @@
-export * from './common';
 export { WFClient } from './client';
+export * from './common';
