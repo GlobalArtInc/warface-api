@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Endpoint, Server } from "./enum/common.enum";
 import { Clan } from "./interfaces/clan.interface";
-import { Achievement } from "./interfaces/common.interface";
+import { Achievement } from "./interfaces/player.interface";
 import { Player } from "./interfaces/player.interface";
 import { Top } from "./interfaces/top.interface";
 import { Weapon } from "./interfaces/weapons.interface";

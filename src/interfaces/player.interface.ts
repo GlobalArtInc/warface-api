@@ -1,5 +1,3 @@
-import { Achievement } from "./common.interface";
-
 export interface Player {
   user_id?: string;
   nickname?: string;
@@ -31,4 +29,10 @@ export interface Player {
   pvp_wl?: number;
   full_player?: Record<string, unknown>;
   achievements?: Achievement[]; 
+}
+
+export interface Achievement {
+  achievement_id: string;
+  progress: string;
+  completion_time: string;
 }

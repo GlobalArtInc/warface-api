@@ -1,11 +1,9 @@
 import axios from "axios";
 import { WFApi } from "..";
 import { Endpoint, Server } from "../enum/common.enum";
-import { Achievement } from "../interfaces/common.interface";
-import { Player } from "../interfaces/player.interface";
+import { Player, Achievement } from "../interfaces/player.interface";
 
 export class playerService {
-
   async getPlayer(name: string, server: Server | null): Promise<Player> {
     return new Promise(async (resolve, reject) => {
       if(!name) {
@@ -32,15 +30,15 @@ export class playerService {
             return resolve(this.format(player, achievements, server));
           }
         } catch (err) {
-          const { data } = err.response;
+          const response = err.response.data;
 
-          if (data.message === 'Ошибка: invalid response status') {
+          if (response.message === 'Ошибка: invalid response status') {
             return reject('maintenance');
-          } else if (data.message === 'Персонаж неактивен') {
+          } else if (response.message === 'Персонаж неактивен') {
               return reject('inactive');
-          } else if (data.message === 'Игрок скрыл свою статистику') {
+          } else if (response.message === 'Игрок скрыл свою статистику') {
               return reject('hidden');
-          } else if (data.message === 'Пользователь не найден') {
+          } else if (response.message === 'Пользователь не найден') {
               return reject('not_found');
           }
         }

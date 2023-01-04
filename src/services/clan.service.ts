@@ -24,11 +24,11 @@ export class ClanService {
 
           return resolve(response.data);
         } catch (err) {
-          const {data} = err.response
+          const response = err.response.data
 
-          if (data.message === 'Ошибка: invalid response status') {
+          if (response.message === 'Ошибка: invalid response status') {
               return reject('maintenance');
-          } else if (servers[servers.length - 1] === server && data.message === 'Клан не найден') {
+          } else if (servers[servers.length - 1] === server && response.message === 'Клан не найден') {
               return reject('not_found');
           }
         }
