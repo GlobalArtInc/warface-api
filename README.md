@@ -7,7 +7,7 @@
 $ npm install @globalart/warface-api
 ```
 ## Модули
-[Документация по WFS](https://wfbot.cf/swagger/)<br />[Использование WFS](README_WFS.md) <br />
+[Документация по WFS](https://wfs.globalart.dev/swagger/)<br />[Использование WFS](README_WFS.md) <br />
 ___
 [Документация по WF API](https://ru.warface.com/wiki/index.php/API)<br />[Использование WF API](README_WFA.md)
 ___

@@ -1,4 +1,4 @@
 export enum Endpoint {
-  Api = 'https://wfbot.cf/api',
-  Web = 'https://wfbot.cf',
+  Api = 'https://wfs.globalart.dev/api',
+  Web = 'https://wfs.globalart.dev',
 }

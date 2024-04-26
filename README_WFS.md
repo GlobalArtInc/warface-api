@@ -1,5 +1,5 @@
 ## Инициализация враппера [WFS]
-[Документация](https://wfbot.cf/swagger/) <br />
+[Документация](https://wfs.globalart.dev/swagger/) <br />
 Common JS
 ```js
 const { WFSClient } = require('@globalart/warface-api');
