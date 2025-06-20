@@ -17,7 +17,7 @@
   "author": "GlobalArt, Inc",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.4",
+    "axios": "^1.10.0",
     "node-fetch": "^3.3.0"
   },
   "devDependencies": {
